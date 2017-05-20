@@ -25,6 +25,7 @@ public class EvolutionFindPatternDemo {
 		Solution result = EvoFindPatternAlgorithm.find(population, pattern, 15);
 		
 		System.out.println("Result: " + result);
+		System.out.println("Fitness: " + Population.getHighestFitness());
 	}
 
 }

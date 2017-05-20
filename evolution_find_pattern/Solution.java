@@ -4,9 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Solution {
-	private List<Integer> solution;
-	private int fitness = 0;
+	private List<Integer> solution;	// solution sequence
+	private int fitness = 0;		// level of solution fitness
 	
+	/**
+	 * Generate random Solution sequence 
+	 * @param length - length of the sequence
+	 */
 	private Solution(int length) {
 		solution = new ArrayList<Integer>();
 		
@@ -15,6 +19,11 @@ public class Solution {
 		}
 	}
 	
+	/**
+	 * Solution factory
+	 * @param length int
+	 * @return Solution
+	 */
 	public static Solution generatePossibleSolution(int length) {
 		return new Solution(length);
 	}

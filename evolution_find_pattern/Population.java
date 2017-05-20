@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Population {
 	private List<Solution> population;
+	private static int highestFitness = 0;
 	
 	public Population(int populationSize, int solutionLength, boolean initialise) {
 		generatePopulation(populationSize, solutionLength, initialise);
@@ -22,8 +23,26 @@ public class Population {
 		}
 	}
 	
+	public static void calculateFitness(Solution solution, List<Integer> pattern) {
+		int fitness = 0;
+			
+		for (int i = 0; i < solution.size(); i++) {
+			if (solution.get(i) == pattern.get(i)) {
+				fitness++;
+			}
+			
+			solution.setFitness(fitness);
+		}
+		
+		if (highestFitness < fitness) highestFitness = fitness;
+	}
+	
 	public List<Solution> getPopulation() {
 		return population;
+	}
+	
+	public static int getHighestFitness() {
+		return highestFitness;
 	}
 	
 	public int size() {

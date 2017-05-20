@@ -29,7 +29,6 @@ public class EvoFindPatternAlgorithm {
 		}
 		
 		solution.set(index, (int)Math.round(Math.random() * 11));
-		calculateFitness(solution, pattern);
 	}
 	
 	public static Solution find(Population population, List<Integer> pattern, int generations) {
@@ -37,6 +36,8 @@ public class EvoFindPatternAlgorithm {
 		
 		for (int i = 0; i < generations; i++) {
 			population = EvoFindPatternAlgorithm.evolve(population, pattern);
+
+			if (Population.getHighestFitness() == pattern.size()) break;
 		}
 		
 		result = population.getPopulation().get(0);
@@ -64,7 +65,7 @@ public class EvoFindPatternAlgorithm {
 			List<Solution> selectedPair = selectPair(populationList);
 			Solution newSolution = crossover(selectedPair.get(0), selectedPair.get(1));
 			mutate(newSolution, pattern);
-			calculateFitness(newSolution, pattern);
+			Population.calculateFitness(newSolution, pattern);
 			population.getPopulation().add(newSolution);
 		}
 		
@@ -106,18 +107,6 @@ public class EvoFindPatternAlgorithm {
 		}
 		
 		return selectedPair;
-	}
-	
-	public static void calculateFitness(Solution solution, List<Integer> pattern) {
-		int fitness = 0;
-			
-		for (int i = 0; i < solution.size(); i++) {
-			if (solution.get(i) == pattern.get(i)) {
-				fitness++;
-			}
-			
-			solution.setFitness(fitness);
-		}	
 	}
 	
 }
