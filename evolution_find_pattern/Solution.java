@@ -19,6 +19,18 @@ public class Solution {
 		return new Solution(length);
 	}
 	
+	public int get(int index) {
+		return solution.get(index);
+	}
+	
+	public void set(int index, int value) {
+		solution.set(index, value);
+	}
+	
+	public int size() {
+		return solution.size();
+	}
+	
 	public List<Integer> getSolution() {
 		return solution;
 	}

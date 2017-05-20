@@ -25,4 +25,20 @@ public class Population {
 	public List<Solution> getPopulation() {
 		return population;
 	}
+	
+	public int size() {
+		return population.size();
+	}
+	
+	public Solution get(int index) {
+		return population.get(index);
+	}
+	
+	public void add(Solution solution) {
+		population.add(solution);
+	}
+	
+	public void remove(Solution solution) {
+		population.remove(solution);
+	}
 }
