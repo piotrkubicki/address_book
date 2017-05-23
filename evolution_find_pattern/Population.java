@@ -5,12 +5,18 @@ import java.util.List;
 
 public class Population {
 	private List<Solution> population;
-	private static int highestFitness = 0;
+	private static int highestFitness = 0;	// the highest fitness in population
 	
 	public Population(int populationSize, int solutionLength, boolean initialise) {
 		generatePopulation(populationSize, solutionLength, initialise);
 	}
 	
+	/**
+	 * Create new population. Can create empty population or initialised it with random solutions.
+	 * @param populationSize int
+	 * @param solutionLength int
+	 * @param initialise boolean
+	 */
 	private void generatePopulation(int populationSize, int solutionLength, boolean initialise) {
 		if (population == null) {
 			population = new ArrayList<Solution>();
@@ -23,6 +29,11 @@ public class Population {
 		}
 	}
 	
+	/**
+	 * Calculate fitness of the given solution based on pattern provided. Update highest population fitness.
+	 * @param solution
+	 * @param pattern
+	 */
 	public static void calculateFitness(Solution solution, List<Integer> pattern) {
 		int fitness = 0;
 			

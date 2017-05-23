@@ -4,8 +4,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EvoFindPatternAlgorithm {
-	
-	public static Solution crossover(Solution solution1, Solution solution2) {
+	private static int generation = 0;
+	/**
+	 * Takes two solutions as arguments and return new solution containing random values from both parents  
+	 * @param solution1 Solution
+	 * @param solution2 Solution
+	 * @return Solution
+	 */
+	private static Solution crossover(Solution solution1, Solution solution2) {
 		Solution newSolution = Solution.generatePossibleSolution(0); // empty solution
 		
 		for (int i = 0; i < solution1.size(); i++) {
@@ -21,7 +27,11 @@ public class EvoFindPatternAlgorithm {
 		return newSolution;
 	}
 	
-	public static void mutate(Solution solution, List<Integer> pattern) {
+	/**
+	 * Select random value from sequence and replace it with new random value
+	 * @param solution Solution
+	 */
+	private static void mutate(Solution solution) {
 		int index = (int)Math.round(Math.random() * solution.size() - 1);
 		
 		if (index < 0) {
@@ -31,12 +41,21 @@ public class EvoFindPatternAlgorithm {
 		solution.set(index, (int)Math.round(Math.random() * 11));
 	}
 	
-	public static Solution find(Population population, List<Integer> pattern, int generations) {
+	/**
+	 * Main function that runs the algorithm.
+	 * @param population Population
+	 * @param pattern List<Integer>
+	 * @param maxGenerations int
+	 * @return Solution
+	 */
+	public static Solution find(Population population, List<Integer> pattern, int maxGenerations) {
 		Solution result = null;
 		
-		for (int i = 0; i < generations; i++) {
+		for (int i = 0; i < maxGenerations; i++) {
 			population = EvoFindPatternAlgorithm.evolve(population, pattern);
-
+			
+			generation++;
+			
 			if (Population.getHighestFitness() == pattern.size()) break;
 		}
 		
@@ -51,7 +70,13 @@ public class EvoFindPatternAlgorithm {
 		return result;
 	}
 	
-	public static Population evolve(Population population, List<Integer> pattern) {
+	/**
+	 * Used to create new generations.
+	 * @param population Population
+	 * @param pattern List<Integer>
+	 * @return Population
+	 */
+	private static Population evolve(Population population, List<Integer> pattern) {
 		Population newPopulation = new Population(0, 0, false); //TODO
 		List<Solution> populationList = new ArrayList<Solution>();
 		// copy population list
@@ -64,7 +89,7 @@ public class EvoFindPatternAlgorithm {
 		for (int i = 0; i < populationSize; i++) {
 			List<Solution> selectedPair = selectPair(populationList);
 			Solution newSolution = crossover(selectedPair.get(0), selectedPair.get(1));
-			mutate(newSolution, pattern);
+			mutate(newSolution);
 			Population.calculateFitness(newSolution, pattern);
 			population.getPopulation().add(newSolution);
 		}
@@ -85,8 +110,12 @@ public class EvoFindPatternAlgorithm {
 		return newPopulation;
 	}
 	
-	// Select solution with highest fitness
-	public static List<Solution> selectPair(List<Solution> population) {
+	/**
+	 * Select solution with highest fitness.
+	 * @param population List<Solution>
+	 * @return List<Solution>
+	 */
+	private static List<Solution> selectPair(List<Solution> population) {
 		List<Solution> selectedPair = new ArrayList<Solution>();
 		Solution temp = population.get(0);
 		selectedPair.add(null);
@@ -107,6 +136,10 @@ public class EvoFindPatternAlgorithm {
 		}
 		
 		return selectedPair;
+	}
+	
+	public static int getGenration() {
+		return generation;
 	}
 	
 }
